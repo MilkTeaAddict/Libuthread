@@ -10,8 +10,6 @@
 #include "queue.h"
 #include "uthread.h"
 
-//#define UTHREAD_STACK_SIZE 32768
-
 int IDLE = 0;
 int READY = 1;
 int RUNNING = 2; //  maybe remove later
