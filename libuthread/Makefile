@@ -15,10 +15,13 @@ deps := $(patsubst %.o, %.d, $(objs))
 -include $(deps)
 
 $(lib): $(objs)
+	@echo "CC $@"
 	$(Q)ar rcs $@ $^
 
 %.o: %.c
+	@echo "CC $@"
 	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
+	@echo "clean"
 	$(Q)rm -f $(lib) $(objs) $(deps)
