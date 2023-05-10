@@ -43,7 +43,6 @@ void preempt_enable(void)
 void preempt_start(bool preempt)
 {
     (void) preempt;
-	/* TODO Phase 4 */
 	/* Set up handler for alarm */
 	struct sigaction sa;
 	sa.sa_handler = &alarm_handler;
@@ -63,8 +62,6 @@ void preempt_start(bool preempt)
 
 void preempt_stop(void)
 {
-	/* TODO Phase 4 */
-
 	/* Restore the previous action for SIGVTALRM */
 	struct sigaction sa;
 	sa.sa_handler = SIG_DFL;
@@ -72,7 +69,6 @@ void preempt_stop(void)
 	sa.sa_flags = 0;
 	sigaction(SIGVTALRM, &sa, NULL);
 
-		
 	/* Configure the timer to fire an alarm 100 times per second */
     struct itimerval timer;
     timer.it_value.tv_sec = 0;
