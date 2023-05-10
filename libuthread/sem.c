@@ -7,7 +7,6 @@
 #include "private.h"
 
 struct semaphore {
-	/* TODO Phase 3 */
 	// Number of resources 
 	int count;
 	// queue for waiting threads 
@@ -16,7 +15,6 @@ struct semaphore {
 
 sem_t sem_create(size_t count)
 {
-	/* TODO Phase 3 */
 	struct semaphore *s = malloc(sizeof(struct semaphore));
 
 	if (s == NULL) {
@@ -33,7 +31,6 @@ sem_t sem_create(size_t count)
 
 int sem_destroy(sem_t sem)
 {
-	/* TODO Phase 3 */
 	if (sem == NULL || queue_length(sem->blockedThreads) != 0) {
         return -1;
     }
@@ -44,7 +41,6 @@ int sem_destroy(sem_t sem)
 
 int sem_down(sem_t sem)
 {
-	/* TODO Phase 3 */
 	if(sem == NULL) {
 		return -1;
 	}
@@ -73,8 +69,6 @@ int sem_up(sem_t sem)
 	if(sem == NULL) {
 		return -1;
 	} 
-
-	/* TODO Phase 3 */
 
     preempt_disable();
     
