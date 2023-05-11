@@ -52,12 +52,12 @@ void preempt_start(bool preempt)
 
 		
 	/* Configure the timer to fire an alarm 100 times per second */
-  struct itimerval timer;
-  timer.it_value.tv_sec = 0;
-  timer.it_value.tv_usec = HZ * HZ;  // 10000 microseconds = 0.01 seconds
-  timer.it_interval.tv_sec = 0;
-  timer.it_interval.tv_usec = HZ * HZ;
-  setitimer(ITIMER_VIRTUAL, &timer, NULL);
+  	struct itimerval timer;
+  	timer.it_value.tv_sec = 0;
+  	timer.it_value.tv_usec = HZ * HZ;  // 10000 microseconds = 0.01 seconds
+  	timer.it_interval.tv_sec = 0;
+  	timer.it_interval.tv_usec = HZ * HZ;
+  	setitimer(ITIMER_VIRTUAL, &timer, NULL);
 }
 
 void preempt_stop(void)
@@ -70,10 +70,10 @@ void preempt_stop(void)
 	sigaction(SIGVTALRM, &sa, NULL);
 
 	/* Configure the timer to fire an alarm 100 times per second */
-  struct itimerval timer;
-  timer.it_value.tv_sec = 0;
-  timer.it_value.tv_usec = 0;  // 10000 microseconds = 0.01 seconds
-  timer.it_interval.tv_sec = 0;
-  timer.it_interval.tv_usec = 0;
-  setitimer(ITIMER_VIRTUAL, &timer, NULL);
+  	struct itimerval timer;
+  	timer.it_value.tv_sec = 0;
+  	timer.it_value.tv_usec = 0;  // 10000 microseconds = 0.01 seconds
+  	timer.it_interval.tv_sec = 0;
+  	timer.it_interval.tv_usec = 0;
+  	setitimer(ITIMER_VIRTUAL, &timer, NULL);
 }
