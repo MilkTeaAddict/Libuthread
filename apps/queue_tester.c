@@ -169,13 +169,12 @@ void test_iterator(void) {
   TEST_ASSERT(data[0] == 2);
   TEST_ASSERT(queue_length(q) == 9);
 
-    
   /* Delete Head of queue, i.e. delete 2, thus queue's new head data is 3 */
   queue_iterate(q, deleteHead);
   queue_dequeue(q, (void **)&ptr);
   TEST_ASSERT(data[1] == *ptr); // expected: 3 == 3
   TEST_ASSERT(queue_length(q) == 7);
-    
+
   /* Delete queue's tail */
   queue_iterate(q, deleteTail);
   TEST_ASSERT(queue_length(q) == 6);
