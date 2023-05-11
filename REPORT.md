@@ -29,12 +29,14 @@ Control Block when needed. This means we can use memory efficiently in our
 program and only allocate space when needed.
 
 The basic queue operations that we made have a runtime of O(1) besides for 
-queue_delete and `queue_iterate` which are O(n), because we need to traverse the queue in both of these operations. The O(1) runtime for most of the queue 
+queue_delete and `queue_iterate` which are O(n), because we need to traverse 
+the queue in both of these operations. The O(1) runtime for most of the queue 
 operations is possible because of the way we implemented our queue. We have 
 both a head and a tail pointer which helps us get easy access to the front and
 end of the list. Whenever we need to enqueue some more data, we can use the 
 tail pointer to get to the end, and vice verse with dequeuing data at the 
-front of the queue. Our queue struct was holding it's own queue length so the `queue_length` function is O(1).
+front of the queue. Our queue struct was holding it's own queue length so the 
+`queue_length` function is O(1).
 
 When we were testing queue_iterate, we ran into a segmentation fault. We 
 figured out that the function being passed into queue_iterate is calling our
@@ -67,11 +69,19 @@ two queues allow efficient thread management.
 
 #### Important functions implemented in the API:
 
-`uthread_run()`: The process to begin the execution of the user threads occurs here. It initialisesthe threads and queues and starts the scheduling loop by calling uthread_yield() until all threads have exited. Also, memory deallocation of the queues and TCB occur after the loop to prevent accidental deallocation during the execution of any thread.
+`uthread_run()`: The process to begin the execution of the user threads occurs 
+here. It initialisesthe threads and queues and starts the scheduling loop by 
+calling uthread_yield() until all threads have exited. Also, memory 
+deallocation of the queues and TCB occur after the loop to prevent accidental 
+deallocation during the execution of any thread.
 
-`uthread_yield()`: This yields the current thread to the next ready thread. The current thread, fetched from `uthread_current()` is added to the ready or exit queue based on its state. The context switching is performed using `uthread_ctx_switch()` after dequeuing the next thread from the ready queue.
+`uthread_yield()`: This yields the current thread to the next ready thread. The 
+current thread, fetched from `uthread_current()` is added to the ready or exit 
+queue based on its state. The context switching is performed using 
+`uthread_ctx_switch()` after dequeuing the next thread from the ready queue.
 
-`uthread_exit()`: Updates the current thread's state to denote it has completed running, then calls`uthread_yield()` to switch to the next thread.
+`uthread_exit()`: Updates the current thread's state to denote it has completed 
+running, then calls`uthread_yield()` to switch to the next thread.
 
 
 ## Phase 3: Implementing the Semaphore API
@@ -132,15 +142,31 @@ leading to undesired behaviour.
 
 ## Testing and Error Managment
 
-**Queue**: To validate the queue's functionality, several tests were conducted that also tackled edge cases. Tests checked if each feature performed as intended even when provided with incorrect cases such as destroying a non-empty queue or performing an action over NULL queue/data. Testing helps identify errors in the code and ensures its correctness.
+**Queue**: To validate the queue's functionality, several tests were conducted 
+that also tackled edge cases. Tests checked if each feature performed as 
+intended even when provided with incorrect cases such as destroying a non-empty 
+queue or performing an action over NULL queue/data. Testing helps identify 
+errors in the code and ensures its correctness.
 
-**Threads**: The two given tests were used to verify uthread API's implementation. One test created a single thread which printed a message. The second test creates multiple threads that each print a message and if thread creation and yielding are implemented correctly, the messages are printed in a specific order. Additionally, the given test cases pass `NULL` as the function's parameter (`arg`). So a valid parameter was entered to verify whether the function was correctly obtained and executed it. 
+**Threads**: The two given tests were used to verify uthread API's 
+implementation. One test created a single thread which printed a message. The 
+second test creates multiple threads that each print a message and if thread 
+creation and yielding are implemented correctly, the messages are printed in a 
+specific order. Additionally, the given test cases pass `NULL` as the 
+function's parameter (`arg`). So a valid parameter was entered to verify 
+whether the function was correctly obtained and executed it. 
 
-**Preemption**: `test_preempt.c` creates multiple threads while enabling preemption. These threads contain an infinite while loop, for example,
+**Preemption**: `test_preempt.c` creates multiple threads while enabling 
+preemption. These threads contain an infinite while loop, for example,
 ```
 while(1) {
     printf("thread3\n");
     sleep(1);
 }
 ```
-which continuously print a message as soon as the thread is created. Thread 1 creates Thread 2, but does explicitly call `uthread_yield()`, the only way to switch to Thread 2 without preemption is to wait for Thread 1 to complete. Thus, to prevent Thread 1 from hoggin the CPU, preemption is enabled which interrupts the currently running thread, allowing the next thread to utilise the CPU.  
+which continuously print a message as soon as the thread is created. Thread 1 
+creates Thread 2, but does explicitly call `uthread_yield()`, the only way to 
+switch to Thread 2 without preemption is to wait for Thread 1 to complete. 
+Thus, to prevent Thread 1 from hoggin the CPU, preemption is enabled which 
+interrupts the currently running thread, allowing the next thread to utilise 
+the CPU.
